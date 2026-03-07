@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Github Issue Tracker </title>
+
+    <!-- favicon -->
+     <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
+
+    <!-- tailwidn and daisy-ui -->
+     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- font -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- fontawesome icon -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+     <style>
+        *{
+            font-family: "Geist", sans-serif;
+        }
+     </style>
+     
+</head>
+<body class = "mx-auto">
+    
+
+    <!-- login form code started -->
+     <div class="form pt-10">
+        <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow mx-auto rounded-2xl pb-5">
+            <div class="stack logo w-32 mx-auto p-5">
+                <img src="./assets/github-logo.png" alt="">
+            </div>
+            <div>
+                <h2 class="text-center font-bold text-2xl">Github Issue Tracker</h2>
+                <p class="text-center text-sm text-gray-400">Sign in to manage your issues</p>
+            </div>
+            <div class="card-body">
+                    <fieldset class="fieldset w-xs mx-auto">
+                    <label class="label font-bold">Username</label>
+                    <input id="login-user" type="text" class="input rounded-md" placeholder="Enter your Username" value="admin" />
+                    <label class="label font-bold">Password</label>
+                    <input id="login-pass" type="password" class="input rounded-md" placeholder="Enter password" />
+                    <button id="login-btn" class="btn btn-primary mt-4 rounded-sm">Sign in</button>
+                    </fieldset>
+            </div>
+            
+            <div>
+                <p class="text-center text-sm text-gray-400">Demo Credentials:</p>
+            </div>
+            <br>
+            <div class="card text-center bg-base-300  shadow rounded-1xl p-5 w-xs mx-auto">
+                <p>Username: admin</p>
+                <p>Password: admin123</p>
+            </div>
+        </div>
+     </div>
+    <!-- login form code ended -->
+
+    <script src="./script/login.js"></script>
+</body>
+</html>
