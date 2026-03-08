@@ -1,3 +1,39 @@
+const allTabButton = document.getElementById("all-tab-btn");
+const openTabButton = document.getElementById("open-tab-btn");
+const closedTabButton = document.getElementById("closed-tab-btn");
+
+function toggleStyle(id){
+    
+    allTabButton.classList.add("btn-soft", "text-gray-600");
+    openTabButton.classList.add("btn-soft", "text-gray-600");
+    closedTabButton.classList.add("btn-soft", "text-gray-600");
+
+    allTabButton.classList.remove("btn-info", "text-white");
+    openTabButton.classList.remove("btn-info", "text-white");
+    closedTabButton.classList.remove("btn-info", "text-white");
+
+    const selected = document.getElementById(id);
+    toggleButtonStatus = id;
+    selected.classList.remove("btn-soft", "text-gray-600");
+    selected.classList.add("btn-info", "text-white");
+
+    if(id == "open-tab-btn"){
+        // allCardsSection.classList.add("hidden");
+        // filterSection.classList.remove("hidden");
+        loadIssues();
+    }else if(id == "all-tab-btn"){
+        // allCardsSection.classList.remove("hidden");
+        // filterSection.classList.add("hidden");
+        loadIssues();
+    }else if(id == "closed-tab-btn"){
+        // allCardsSection.classList.add("hidden");
+        // filterSection.classList.remove("hidden");
+        loadIssues();
+    }
+}
+
+
+
 const loadIssues = () =>{
     // const url = 'https://jsonplaceholder.typicode.com/posts';
     // https://phi-lab-server.vercel.app/api/v1/lab/issues
@@ -17,7 +53,7 @@ const loadIssues = () =>{
 //       "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
 //       "status": "open",
 //       "labels": [
-//         "bug",
+//         "bug",d
 //         "help wanted"
 //       ],
 //       "priority": "high",
