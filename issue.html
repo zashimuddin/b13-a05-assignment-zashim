@@ -43,28 +43,37 @@
 //       "updatedAt": "2024-01-15T10:30:00Z"
 //     } -->
 
-            <section id="allCards" class ="w-1/12 mx-auto py-10 space-y-5">
-                <div class="card bg-base-100 w-75 shadow-xl p-2 gap-2">
-                    <div class="flex justify-between">
-                        <figure>
-                        <!-- <img src="./assets/Closed-Status.png" alt="" /> -->
-                        <i class="fa-regular fa-circle-check"></i>
-                        </figure>
-                        <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">high</div>
-                    </div>
-                    
-                    <div class="card-body">
+            <section id="allCards" class ="w-7/12 mx-auto py-5 space-y-1">
+                <div class="card bg-base-100 w-100 max-sm:5 border shadow-xl p-2 gap-2">
+                    <div class="card-body gap-3">
                         <h2 class="card-title">Card Title</h2>
-                        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                        <div class="card-actions justify-start">
+                        <div class="flex items-center gap-3">
+                            <div class="badge badge-primary bg-green-600 rounded-full">opened</div>
+                            <div class="text-xs text-gray-400">
+                                <ul class="flex items-center gap-3 text-xs text-gray-400">
+                                    <li><i class="fa-regular fa-circle-dot"></i> Opened by Fahim</li>
+                                    <li><i class="fa-regular fa-circle-dot"></i> 3/9/2026</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="card-actions pt-5 justify-start">
                         <div class="badge badge-outline badge-error bg-red-200 rounded-full"><i class="fa-solid fa-bug"></i>Bug</div>
                         <div class="badge badge-outline badge-error bg-yellow-200 rounded-full"><i class="fa-regular fa-life-ring"></i>Help Wanted</div>
-                        
-                        <hr class ="bg-slate-500 mx-auto">
-
-                        <p>this is test</p>
-
                         </div>
+                    <div class="pt-5 pb-5">
+                        <p class="text-sm text-gray-600">A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                    </div>
+                    <div class="flex w-85 items-center justify-between bg-base-100 bg-slate-300 shadow rounded-md p-5 mx-auto">
+                            <div class="card">
+                                <p class="text-gray-600">Assignee:</p>
+                                <p class="font-bold">Fahim Ahmed</p>
+                            </div>
+                            <div>
+                                <p>Priority</p>
+                                <div class="badge badge-error bg-red-700 text-white rounded-full">High</div>
+                            </div>
+                    </div>
                     </div>
                 </div>
             </section>
