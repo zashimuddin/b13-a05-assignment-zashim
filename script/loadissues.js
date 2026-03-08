@@ -123,7 +123,7 @@ async function loadIssues() {
       const div = document.createElement("div");
 
       div.innerHTML = `
-        <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
+        <div onclick="my_modal_5.showModal()" class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure>${image}</figure>
                         <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
@@ -201,7 +201,7 @@ async function loadOpenIssues() {
       const div = document.createElement("div");
 
       div.innerHTML = `
-        <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
+        <div onclick="my_modal_5.showModal()" class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure><img src="./assets/Open-Status.png" alt=""/></figure>
                         <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
@@ -274,7 +274,7 @@ async function loadClosedIssues() {
 
       const div = document.createElement("div");
       div.innerHTML = `
-        <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
+        <div onclick="my_modal_5.showModal()" class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure><i class="fa-regular fa-circle-check"></i></figure>
                         <div class="badge ${badgeColor} rounded-full">${issue.priority}</div>
@@ -379,7 +379,7 @@ function displaySearchResults(issues){
       const div = document.createElement("div");
 
       div.innerHTML = `
-        <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
+        <div onclick="my_modal_5.showModal()" class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure>${image}</figure>
                         <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
