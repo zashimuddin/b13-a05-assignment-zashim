@@ -15,7 +15,7 @@ document.getElementById("login-btn").addEventListener("click", function(){
     if(userName === "admin" && password === "admin123"){
         //3-1 true :::>> aleart> homepage
         console.log("Login Success");
-        alert("Login Success");
+        // alert("Login Success");
 
         //following line of code will add the history in the browser. so that we 
         // can go back to our previous page from the browser end

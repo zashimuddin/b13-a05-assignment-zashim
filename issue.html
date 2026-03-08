@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- favicon -->
+     <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
+
+    <!-- tailwidn and daisy-ui -->
+     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- font -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- fontawesome icon -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+     <style>
+        *{
+            font-family: "Geist", sans-serif;
+        }
+     </style>
+</head>
+<body>
+    <!-- // "data": [
+//     {
+//       "id": 1,
+//       "title": "Fix navigation menu on mobile devices",
+//       "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
+//       "status": "open",
+//       "labels": [
+//         "bug",
+//         "help wanted"
+//       ],
+//       "priority": "high",
+//       "author": "john_doe",
+//       "assignee": "jane_smith",
+//       "createdAt": "2024-01-15T10:30:00Z",
+//       "updatedAt": "2024-01-15T10:30:00Z"
+//     } -->
+
+            <section id="allCards" class ="w-2/12 mx-auto py-10 space-y-5">
+                <div class="card bg-base-100 w-96 shadow-xl p-5 gap-2">
+                    <div class="flex justify-between">
+                        <figure>
+                        <img src="./assets/Open-Status.png" alt="" />
+                        </figure>
+                        <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">high</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h2 class="card-title">Card Title</h2>
+                        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                        <div class="card-actions justify-start">
+                        <div class="badge badge-outline badge-error bg-red-200 rounded-full"><i class="fa-solid fa-bug"></i>Bug</div>
+                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full"><i class="fa-regular fa-life-ring"></i>Help Wanted</div>
+                        
+                        <hr class ="bg-slate-500">
+
+                        <p>this is test</p>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        
+
+    <script src="./script/login.js"></script>
+
+</body>
+</html>
