@@ -57,9 +57,6 @@ function toggleStyle(id){
     }
 }
 
-
-
-
 async function loadIssues() {
   try {
     const response = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
@@ -78,14 +75,32 @@ async function loadIssues() {
     allIssues.forEach(issue => {
 
         let borderColor = "";
+        let image = "";
         if (issue.status === "open") {
-        borderColor = "border-green-600";
+            borderColor = "border-green-600";
+            image = '<img src="./assets/Open-Status.png" alt=""/>';
         } 
         else if (issue.status === "closed") {
-        borderColor = "border-red-600";
+            borderColor = "border-red-600";
+            image = '<i class="fa-regular fa-circle-check"></i>';
         } 
         else {
-        borderColor = "border-yellow-500";
+            borderColor = "border-yellow-500";
+        }
+
+        let priorityColor = "";
+
+        if (issue.priority === "high") {
+            priorityColor = "border-red-200";
+            badgeColor = "badge-secondary"
+        } 
+        else if (issue.priority === "medium") {
+            priorityColor = "border-yellow-200";
+            badgeColor = "badge-warning"
+        } 
+        else {
+            priorityColor = "border-blue-200";
+            badgeColor = "badge-error"
         }
 
       const div = document.createElement("div");
@@ -93,8 +108,8 @@ async function loadIssues() {
       div.innerHTML = `
         <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
-                        <figure><img src="./assets/Open-Status.png" alt=""/></figure>
-                        <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${issue.status}</div>
+                        <figure>${image}</figure>
+                        <div class="badge ${badgeColor}  rounded-full">${issue.priority}</div>
                     </div>
                     
                     <div class="card-body">
@@ -122,103 +137,8 @@ async function loadIssues() {
   }
 }
 
-// const loadIssues = () =>{
-//     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
-//     fetch(url) 
-//       .then((response) => response.json())
-//       .then((json) => {
-//         displayIssues(json.data);
-//       })
-// };
-
-// const displayIssues = (posts) => {
-//     // 1. get the container and empty the container
-//     const container = document.getElementById("all-issue-container");
-//     container.innerHTML = " ";
-
-//     posts.forEach((post) => {
-
-//         //2. Create element
-//         const div = document.createElement("div");
-//         div.innerHTML = `
-//         <div class="card h-[100%] bg-base-100 shadow-xl p-5 gap-2">
-//                     <div class="flex justify-between">
-//                         <figure><img src="./assets/Open-Status.png" alt=""/></figure>
-//                         <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${post.status}</div>
-//                     </div>
-                    
-//                     <div class="card-body">
-//                         <h2 class="card-title">${post.title}</h2>
-//                         <p>${post.description}</p>
-//                         <div class="card-actions justify-start">
-//                         <div class="badge badge-outline badge-error bg-red-200 rounded-full"><i class="fa-solid fa-bug"></i>${post.labels[0]}</div>
-//                         <div class="badge badge-outline badge-error bg-yellow-200 rounded-full"><i class="fa-regular fa-life-ring"></i>${post.labels[1]}</div>
-//                         </div>
-//                         <br>
-//                         <hr class ="bg-slate-500">
-//                         <p>${post.assignee}</p>
-//                         <p>created ${post.createdAt}</p>
-//                     </div>
-//                 </div>
-
-//         `;
-
-//         //3. add to the container
-//         container.append(div);
-        
-//     })
-// }
-
 loadIssues();
 
-// const loadOpenIssues = () =>{
-//     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
-//     fetch(url) 
-//       .then((response) => response.json())
-//       .then((json) => {
-//         displayOpenIssues(json.data);
-//       })
-// };
-
-// const displayOpenIssues = (posts) => {
-//     // 1. get the container and empty the container
-//     const postContainer = document.getElementById("open-issue-container");
-//     postContainer.innerHTML = " ";
-
-//     posts.forEach((post) => {
-//         let postStatus = "${post.status}";
-//         if(postStatus === "open"){
-//         const postCard = document.createElement("div");
-//         postCard.innerHTML = `
-//         <div class="card h-[100%] bg-base-100 shadow-xl p-5 gap-2">
-//                     <div class="flex justify-between">
-//                         <figure><img src="./assets/Close-Status.png" alt=""/></figure>
-//                         <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${post.status}</div>
-//                     </div>
-                    
-//                     <div class="card-body">
-//                         <h2 class="card-title">${post.title}</h2>
-//                         <p>${post.description}</p>
-//                         <div class="card-actions justify-start">
-//                         <div class="badge badge-outline badge-error bg-red-200 rounded-full"><i class="fa-solid fa-bug"></i>${post.labels[0]}</div>
-//                         <div class="badge badge-outline badge-error bg-yellow-200 rounded-full"><i class="fa-regular fa-life-ring"></i>${post.labels[1]}</div>
-//                         </div>
-//                         <br>
-//                         <hr class ="bg-slate-500">
-//                         <p>${post.assignee}</p>
-//                         <p>created ${post.createdAt}</p>
-//                     </div>
-//                 </div>
-
-//         `;
-
-        
-//         }
-//         //3. add to the container
-//         postContainer.append(postCard);
-   
-//     })
-// }
 
 async function loadOpenIssues() {
   try {
