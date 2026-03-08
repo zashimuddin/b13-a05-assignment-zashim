@@ -76,10 +76,22 @@ async function loadIssues() {
     container.innerHTML = "";
 
     allIssues.forEach(issue => {
+
+        let borderColor = "";
+        if (issue.status === "open") {
+        borderColor = "border-green-600";
+        } 
+        else if (issue.status === "closed") {
+        borderColor = "border-red-600";
+        } 
+        else {
+        borderColor = "border-yellow-500";
+        }
+
       const div = document.createElement("div");
 
       div.innerHTML = `
-        <div class="card h-[100%] bg-base-100 shadow-xl p-5 gap-2">
+        <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure><img src="./assets/Open-Status.png" alt=""/></figure>
                         <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${issue.status}</div>
@@ -222,10 +234,22 @@ async function loadOpenIssues() {
     container.innerHTML = "";
 
     openIssues.forEach(issue => {
+
+        let borderColor = "";
+        if (issue.status === "open") {
+        borderColor = "border-green-600";
+        } 
+        else if (issue.status === "closed") {
+        borderColor = "border-red-600";
+        } 
+        else {
+        borderColor = "border-yellow-500";
+        }
+
       const div = document.createElement("div");
 
       div.innerHTML = `
-        <div class="card h-[100%] bg-base-100 shadow-xl p-5 gap-2">
+        <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure><img src="./assets/Open-Status.png" alt=""/></figure>
                         <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${issue.status}</div>
@@ -270,9 +294,20 @@ async function loadClosedIssues() {
     container.innerHTML = "";
 
     closedIssues.forEach(issue => {
+        let borderColor = "";
+        if (issue.status === "open") {
+        borderColor = "border-green-600";
+        } 
+        else if (issue.status === "closed") {
+        borderColor = "border-red-600";
+        } 
+        else {
+        borderColor = "border-yellow-500";
+        }
+
       const div = document.createElement("div");
       div.innerHTML = `
-        <div class="card h-[100%] bg-base-100 shadow-xl p-5 gap-2">
+        <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure><i class="fa-regular fa-circle-check"></i></figure>
                         <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${issue.status}</div>
