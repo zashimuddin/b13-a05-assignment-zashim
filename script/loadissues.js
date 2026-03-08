@@ -166,13 +166,28 @@ async function loadOpenIssues() {
         borderColor = "border-yellow-500";
         }
 
+        let priorityColor = "";
+
+        if (issue.priority === "high") {
+            priorityColor = "border-red-200";
+            badgeColor = "badge-secondary"
+        } 
+        else if (issue.priority === "medium") {
+            priorityColor = "border-yellow-200";
+            badgeColor = "badge-warning"
+        } 
+        else {
+            priorityColor = "border-blue-200";
+            badgeColor = "badge-error"
+        }
+
       const div = document.createElement("div");
 
       div.innerHTML = `
         <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure><img src="./assets/Open-Status.png" alt=""/></figure>
-                        <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${issue.status}</div>
+                        <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
                     </div>
                     
                     <div class="card-body">
@@ -225,12 +240,27 @@ async function loadClosedIssues() {
         borderColor = "border-yellow-500";
         }
 
+        let priorityColor = "";
+
+        if (issue.priority === "high") {
+            priorityColor = "border-red-200";
+            badgeColor = "badge-secondary"
+        } 
+        else if (issue.priority === "medium") {
+            priorityColor = "border-yellow-200";
+            badgeColor = "badge-warning"
+        } 
+        else {
+            priorityColor = "border-blue-200";
+            badgeColor = "badge-error"
+        }
+
       const div = document.createElement("div");
       div.innerHTML = `
         <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure><i class="fa-regular fa-circle-check"></i></figure>
-                        <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${issue.status}</div>
+                        <div class="badge ${badgeColor} rounded-full">${issue.priority}</div>
                     </div>
                     
                     <div class="card-body">
