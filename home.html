@@ -62,24 +62,11 @@
             <div class="right flex gap-2">
                 <div>
                     <label class="input">
-                    <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <g
-                        stroke-linejoin="round"
-                        stroke-linecap="round"
-                        stroke-width="2.5"
-                        fill="none"
-                        stroke="currentColor"
-                        >
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.3-4.3"></path>
-                        </g>
-                    </svg>
-                    <input type="search" required placeholder="Search" />
+                    <input id="input-search" type="text" required placeholder="Search issues" />
                     </label>
                 </div>
-                
                 <div>
-                   <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Issue</button> 
+                   <button id="search-btn" class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Issue</button> 
                 </div>
             </div>
         
@@ -142,11 +129,12 @@
         </section>
 
         <section id="open-issue-container" class="grid grid-cols-3 gap-4 ">
-            <P>This Open Issue Container</P>
         </section>
 
         <section id="closed-issue-container" class="grid grid-cols-3 gap-4 ">
-            <P>This Closed Issue Container</P>
+        </section>
+
+        <section id="search-issue-container" class="grid grid-cols-3 gap-4 ">
         </section>
         
     </main>

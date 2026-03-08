@@ -20,6 +20,21 @@ const allTabButton = document.getElementById("all-tab-btn");
 const openTabButton = document.getElementById("open-tab-btn");
 const closedTabButton = document.getElementById("closed-tab-btn");
 
+// document.getElementById("search-btn").addEventListener("click", () => {
+//     const inputValue = document.getElementById("input-search");
+//     const searchValue = inputValue.value.trim().toLowerCase();
+//     console.log(searchValue);
+
+//     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+//     .then((res) => res.json())
+//     .then((data) => {
+//         const allIssues = data.data;
+//         console.log(allIssues);
+//         const filterIssues = allIssues.filter((issue) => issue.title.toLowerCase().includes(searchValue));
+//         console.log(filterIssues);
+//     });
+// });
+
 function toggleStyle(id){
     
     allTabButton.classList.add("btn-soft", "text-gray-600");
@@ -89,6 +104,7 @@ async function loadIssues() {
         }
 
         let priorityColor = "";
+        let badgeColor = "";
 
         if (issue.priority === "high") {
             priorityColor = "border-red-200";
@@ -103,21 +119,22 @@ async function loadIssues() {
             badgeColor = "badge-error"
         }
 
+
       const div = document.createElement("div");
 
       div.innerHTML = `
         <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
                     <div class="flex justify-between">
                         <figure>${image}</figure>
-                        <div class="badge ${badgeColor}  rounded-full">${issue.priority}</div>
+                        <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
                     </div>
                     
                     <div class="card-body">
                         <h2 class="card-title">${issue.title}</h2>
                         <p>${issue.description}</p>
                         <div class="card-actions justify-start">
-                        <div class="badge badge-outline badge-error bg-red-200 rounded-full"><i class="fa-solid fa-bug"></i>${issue.labels[0]}</div>
-                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full"><i class="fa-regular fa-life-ring"></i>${issue.labels[1]}</div>
+                        <div class="badge badge-outline badge-error bg-red-200 rounded-full">${issue.labels[0]} </div>
+                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full">${issue.labels[1]}</div>
                         </div>
                         <br>
                         <hr class ="bg-slate-500">
@@ -145,7 +162,7 @@ async function loadOpenIssues() {
     const response = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
     const data = await response.json();
 
-    const issues = data.data;
+    let issues = data.data;
 
     // filter only open issues
     const openIssues = issues.filter(issue => issue.status === "open");
@@ -194,8 +211,8 @@ async function loadOpenIssues() {
                         <h2 class="card-title">${issue.title}</h2>
                         <p>${issue.description}</p>
                         <div class="card-actions justify-start">
-                        <div class="badge badge-outline badge-error bg-red-200 rounded-full"><i class="fa-solid fa-bug"></i>${issue.labels[0]}</div>
-                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full"><i class="fa-regular fa-life-ring"></i>${issue.labels[1]}</div>
+                        <div class="badge badge-outline badge-error bg-red-200 rounded-full">${issue.labels[0]}</div>
+                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full">${issue.labels[1]}</div>
                         </div>
                         <br>
                         <hr class ="bg-slate-500">
@@ -267,8 +284,8 @@ async function loadClosedIssues() {
                         <h2 class="card-title">${issue.title}</h2>
                         <p>${issue.description}</p>
                         <div class="card-actions justify-start">
-                        <div class="badge badge-outline badge-error bg-red-200 rounded-full"><i class="fa-solid fa-bug"></i>${issue.labels[0]}</div>
-                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full"><i class="fa-regular fa-life-ring"></i>${issue.labels[1]}</div>
+                        <div class="badge badge-outline badge-error bg-red-200 rounded-full">${issue.labels[0]}</div>
+                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full">${issue.labels[1]}</div>
                         </div>
                         <br>
                         <hr class ="bg-slate-500">
@@ -287,3 +304,105 @@ async function loadClosedIssues() {
   }
 }
 
+// =============== Search button Functionality started from here===============
+
+document.getElementById("search-btn").addEventListener("click", async () => {
+
+    const inputValue = document.getElementById("input-search");
+    const searchValue = inputValue.value.trim().toLowerCase();
+
+    try {
+
+        const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
+        const data = await res.json();
+
+        const issues = data.data;
+
+        const filteredIssues = issues.filter(issue =>
+            issue.title.toLowerCase().includes(searchValue) ||
+            issue.description.toLowerCase().includes(searchValue) ||
+            issue.priority.toLowerCase().includes(searchValue) ||
+            issue.labels.some(label => label.toLowerCase().includes(searchValue))
+        );
+
+        displaySearchResults(filteredIssues);
+
+    } catch (error) {
+        console.error("Search error:", error);
+    }
+
+});
+
+function displaySearchResults(issues){
+
+    const container = document.getElementById("all-issue-container");
+    container.innerHTML = "";
+
+    if(issues.length === 0){
+        container.innerHTML = "<p class='text-center text-gray-500'>No issues found</p>";
+        return;
+    }
+
+    issues.forEach(issue => {
+
+        let borderColor = "";
+        let image = "";
+        if (issue.status === "open") {
+            borderColor = "border-green-600";
+            image = '<img src="./assets/Open-Status.png" alt=""/>';
+        } 
+        else if (issue.status === "closed") {
+            borderColor = "border-red-600";
+            image = '<i class="fa-regular fa-circle-check"></i>';
+        } 
+        else {
+            borderColor = "border-yellow-500";
+        }
+
+        let priorityColor = "";
+        let badgeColor = "";
+
+        if (issue.priority === "high") {
+            priorityColor = "border-red-200";
+            badgeColor = "badge-secondary"
+        } 
+        else if (issue.priority === "medium") {
+            priorityColor = "border-yellow-200";
+            badgeColor = "badge-warning"
+        } 
+        else {
+            priorityColor = "border-blue-200";
+            badgeColor = "badge-error"
+        }
+
+
+      const div = document.createElement("div");
+
+      div.innerHTML = `
+        <div class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
+                    <div class="flex justify-between">
+                        <figure>${image}</figure>
+                        <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h2 class="card-title">${issue.title}</h2>
+                        <p>${issue.description}</p>
+                        <div class="card-actions justify-start">
+                        <div class="badge badge-outline badge-error bg-red-200 rounded-full">${issue.labels[0]} </div>
+                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full">${issue.labels[1]}</div>
+                        </div>
+                        <br>
+                        <hr class ="bg-slate-500">
+                        <p>${issue.assignee}</p>
+                        <p>created ${issue.createdAt}</p>
+                    </div>
+                </div>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
