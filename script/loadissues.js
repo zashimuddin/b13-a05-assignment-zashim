@@ -1,51 +1,3 @@
-const allTabButton = document.getElementById("all-tab-btn");
-const openTabButton = document.getElementById("open-tab-btn");
-const closedTabButton = document.getElementById("closed-tab-btn");
-
-function toggleStyle(id){
-    
-    allTabButton.classList.add("btn-soft", "text-gray-600");
-    openTabButton.classList.add("btn-soft", "text-gray-600");
-    closedTabButton.classList.add("btn-soft", "text-gray-600");
-
-    allTabButton.classList.remove("btn-info", "text-white");
-    openTabButton.classList.remove("btn-info", "text-white");
-    closedTabButton.classList.remove("btn-info", "text-white");
-
-    const selected = document.getElementById(id);
-    toggleButtonStatus = id;
-    selected.classList.remove("btn-soft", "text-gray-600");
-    selected.classList.add("btn-info", "text-white");
-
-    if(id == "open-tab-btn"){
-        // allCardsSection.classList.add("hidden");
-        // filterSection.classList.remove("hidden");
-        loadIssues();
-    }else if(id == "all-tab-btn"){
-        // allCardsSection.classList.remove("hidden");
-        // filterSection.classList.add("hidden");
-        loadIssues();
-    }else if(id == "closed-tab-btn"){
-        // allCardsSection.classList.add("hidden");
-        // filterSection.classList.remove("hidden");
-        loadIssues();
-    }
-}
-
-
-
-const loadIssues = () =>{
-    // const url = 'https://jsonplaceholder.typicode.com/posts';
-    // https://phi-lab-server.vercel.app/api/v1/lab/issues
-    const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
-    fetch(url) 
-      .then((response) => response.json())
-      .then((json) => {
-        // console.log(data);
-        displayIssues(json.data);
-      })
-};
-
 // "data": [
 //     {
 //       "id": 1,
@@ -63,9 +15,61 @@ const loadIssues = () =>{
 //       "updatedAt": "2024-01-15T10:30:00Z"
 //     }
 
+
+const allTabButton = document.getElementById("all-tab-btn");
+const openTabButton = document.getElementById("open-tab-btn");
+const closedTabButton = document.getElementById("closed-tab-btn");
+
+function toggleStyle(id){
+    
+    allTabButton.classList.add("btn-soft", "text-gray-600");
+    openTabButton.classList.add("btn-soft", "text-gray-600");
+    closedTabButton.classList.add("btn-soft", "text-gray-600");
+
+    allTabButton.classList.remove("btn-info", "text-white");
+    openTabButton.classList.remove("btn-info", "text-white");
+    closedTabButton.classList.remove("btn-info", "text-white");
+
+    const allIssuesSection = document.getElementById("all-issue-container");
+    const openIssuesSection = document.getElementById("open-issue-container");
+    const closedIssuesSection = document.getElementById("closed-issue-container");
+
+    const selected = document.getElementById(id);
+    toggleButtonStatus = id;
+    selected.classList.remove("btn-soft", "text-gray-600");
+    selected.classList.add("btn-info", "text-white");
+
+    if(id == "open-tab-btn"){
+        allIssuesSection.classList.add("hidden");
+        openIssuesSection.classList.remove("hidden");
+        closedIssuesSection.classList.add("hidden");
+        loadOpenIssues();
+    }else if(id == "all-tab-btn"){
+        allIssuesSection.classList.remove("hidden");
+        openIssuesSection.classList.add("hidden");
+        closedIssuesSection.classList.add("hidden");
+         loadIssues();
+    }else if(id == "closed-tab-btn"){
+        allIssuesSection.classList.add("hidden");
+        openIssuesSection.classList.add("hidden");
+        closedIssuesSection.classList.remove("hidden");
+        // loadIssues();
+    }
+}
+
+
+const loadIssues = () =>{
+    const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
+    fetch(url) 
+      .then((response) => response.json())
+      .then((json) => {
+        displayIssues(json.data);
+      })
+};
+
 const displayIssues = (posts) => {
     // 1. get the container and empty the container
-    const postContainer = document.getElementById("issue-container");
+    const postContainer = document.getElementById("all-issue-container");
     postContainer.innerHTML = " ";
 
     posts.forEach((post) => {
@@ -101,4 +105,103 @@ const displayIssues = (posts) => {
     })
 }
 
-//loadIssues();
+ loadIssues();
+
+// const loadOpenIssues = () =>{
+//     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
+//     fetch(url) 
+//       .then((response) => response.json())
+//       .then((json) => {
+//         displayOpenIssues(json.data);
+//       })
+// };
+
+// const displayOpenIssues = (posts) => {
+//     // 1. get the container and empty the container
+//     const postContainer = document.getElementById("open-issue-container");
+//     postContainer.innerHTML = " ";
+
+//     posts.forEach((post) => {
+//         let postStatus = "${post.status}";
+//         if(postStatus === "open"){
+//         const postCard = document.createElement("div");
+//         postCard.innerHTML = `
+//         <div class="card h-[100%] bg-base-100 shadow-xl p-5 gap-2">
+//                     <div class="flex justify-between">
+//                         <figure><img src="./assets/Close-Status.png" alt=""/></figure>
+//                         <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${post.status}</div>
+//                     </div>
+                    
+//                     <div class="card-body">
+//                         <h2 class="card-title">${post.title}</h2>
+//                         <p>${post.description}</p>
+//                         <div class="card-actions justify-start">
+//                         <div class="badge badge-outline badge-error bg-red-200 rounded-full"><i class="fa-solid fa-bug"></i>${post.labels[0]}</div>
+//                         <div class="badge badge-outline badge-error bg-yellow-200 rounded-full"><i class="fa-regular fa-life-ring"></i>${post.labels[1]}</div>
+//                         </div>
+//                         <br>
+//                         <hr class ="bg-slate-500">
+//                         <p>${post.assignee}</p>
+//                         <p>created ${post.createdAt}</p>
+//                     </div>
+//                 </div>
+
+//         `;
+
+        
+//         }
+//         //3. add to the container
+//         postContainer.append(postCard);
+   
+//     })
+// }
+
+async function loadOpenIssues() {
+  try {
+    const response = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
+    const data = await response.json();
+
+    const issues = data.data;
+
+    // filter only open issues
+    const openIssues = issues.filter(issue => issue.status === "open");
+
+    const container = document.getElementById("open-issue-container");
+    container.innerHTML = "";
+
+    openIssues.forEach(issue => {
+      const div = document.createElement("div");
+
+      div.innerHTML = `
+        <div class="card h-[100%] bg-base-100 shadow-xl p-5 gap-2">
+                    <div class="flex justify-between">
+                        <figure><img src="./assets/Open-Status.png" alt=""/></figure>
+                        <div class="badge badge-soft badge-secondary bg-pink-300 rounded-full">${issue.status}</div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h2 class="card-title">${issue.title}</h2>
+                        <p>${issue.description}</p>
+                        <div class="card-actions justify-start">
+                        <div class="badge badge-outline badge-error bg-red-200 rounded-full"><i class="fa-solid fa-bug"></i>${issue.labels[0]}</div>
+                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full"><i class="fa-regular fa-life-ring"></i>${issue.labels[1]}</div>
+                        </div>
+                        <br>
+                        <hr class ="bg-slate-500">
+                        <p>${issue.assignee}</p>
+                        <p>created ${issue.createdAt}</p>
+                    </div>
+                </div>
+
+        `;
+
+      container.appendChild(div);
+    });
+
+  } catch (error) {
+    console.error("Error fetching issues:", error);
+  }
+}
+
+// run function
+// loadOpenIssues();
