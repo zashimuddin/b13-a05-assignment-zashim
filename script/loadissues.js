@@ -37,6 +37,8 @@ function toggleStyle(id){
 
     const selected = document.getElementById(id);
     toggleButtonStatus = id;
+    toggleId = toggleButtonStatus;
+    
     selected.classList.remove("btn-soft", "text-gray-600");
     selected.classList.add("btn-info", "text-white");
 
@@ -57,6 +59,8 @@ function toggleStyle(id){
         loadClosedIssues();
     }
 }
+
+console.log(toggleId);
 
 const loadIssueDetails = async(id) => {
     const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
@@ -114,7 +118,7 @@ async function loadIssues() {
     const issues = data.data;
 
     const allIssues = issues;
-    console.log(allIssues.length)
+    // console.log(allIssues.length)
     const totalIssues = document.getElementById("total-count");
     totalIssues.innerText = allIssues.length;
 
@@ -348,10 +352,10 @@ const manageSpinner = (status) => {
     spinnerStatus = document.getElementById("spinner_section");
     if(status == true){
         spinnerStatus.classList.remove("hidden");
-        console.log("Spinner Activate");
+        // console.log("Spinner Activate");
     } else if (status == false){
         spinnerStatus.classList.add("hidden");
-        console.log("Spinner De-activate");
+        // console.log("Spinner De-activate");
         
     }  
 };
