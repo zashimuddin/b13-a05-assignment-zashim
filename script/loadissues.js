@@ -36,7 +36,6 @@ function toggleStyle(id){
 
     const selected = document.getElementById(id);
     toggleButtonStatus = id;
-    toggleId = toggleButtonStatus;
     
     selected.classList.remove("btn-soft", "text-gray-600");
     selected.classList.add("btn-info", "text-white");
@@ -58,8 +57,6 @@ function toggleStyle(id){
         loadClosedIssues();
     }
 }
-
-console.log(toggleId);
 
 const loadIssueDetails = async(id) => {
     const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
