@@ -20,7 +20,6 @@ const allTabButton = document.getElementById("all-tab-btn");
 const openTabButton = document.getElementById("open-tab-btn");
 const closedTabButton = document.getElementById("closed-tab-btn");
 
-
 function toggleStyle(id){
     
     allTabButton.classList.add("btn-soft", "text-gray-600");
