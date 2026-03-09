@@ -47,4 +47,4 @@
 
     ## Q5️⃣ What are template literals?
     ## Answer:
-    - backticks ` `
+    - backticks ``

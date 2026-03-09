@@ -49,7 +49,7 @@ function toggleStyle(id){
         allIssuesSection.classList.remove("hidden");
         openIssuesSection.classList.add("hidden");
         closedIssuesSection.classList.add("hidden");
-         loadIssues();
+        loadIssues();
     }else if(id == "closed-tab-btn"){
         allIssuesSection.classList.add("hidden");
         openIssuesSection.classList.add("hidden");
@@ -120,7 +120,8 @@ async function loadIssues() {
 
     const container = document.getElementById("all-issue-container");
     container.innerHTML = "";
-
+    manageSpinner(true);
+    
     allIssues.forEach(issue => {
 
         let borderColor = "";
@@ -181,13 +182,14 @@ async function loadIssues() {
 
       container.append(div);
     });
-
+    manageSpinner(false);
 
   } catch (error) {
     console.error("Error fetching issues:", error);
+    manageSpinner(false);
   }
-}
-
+  
+} 
 loadIssues();
 
 
@@ -203,6 +205,7 @@ async function loadOpenIssues() {
 
     const container = document.getElementById("open-issue-container");
     container.innerHTML = "";
+    manageSpinner(true);
 
     openIssues.forEach(issue => {
 
@@ -259,9 +262,10 @@ async function loadOpenIssues() {
 
       container.appendChild(div);
     });
-
+    manageSpinner(false);
   } catch (error) {
     console.error("Error fetching issues:", error);
+    manageSpinner(false);
   }
 }
 
@@ -278,6 +282,7 @@ async function loadClosedIssues() {
 
     const container = document.getElementById("closed-issue-container");
     container.innerHTML = "";
+    manageSpinner(true);
 
     closedIssues.forEach(issue => {
         let borderColor = "";
@@ -332,11 +337,24 @@ async function loadClosedIssues() {
 
       container.appendChild(div);
     });
-
+    manageSpinner(false);
   } catch (error) {
     console.error("Error fetching issues:", error);
+    manageSpinner(false);
   }
 }
+
+const manageSpinner = (status) => {
+    spinnerStatus = document.getElementById("spinner_section");
+    if(status == true){
+        spinnerStatus.classList.remove("hidden");
+        console.log("Spinner Activate");
+    } else if (status == false){
+        spinnerStatus.classList.add("hidden");
+        console.log("Spinner De-activate");
+        
+    }  
+};
 
 // =============== Search button Functionality started from here===============
 
