@@ -20,7 +20,19 @@ const allTabButton = document.getElementById("all-tab-btn");
 const openTabButton = document.getElementById("open-tab-btn");
 const closedTabButton = document.getElementById("closed-tab-btn");
 
+function getId(clickedButtonId) {
+  return clickedButtonId;
+}
+
+function getToggleButtonId(value) {
+  const toggleButtonId = getId(value); 
+  toggleStyle(toggleButtonId);        
+}
+
+// function toggleStyle(id)
 function toggleStyle(id){
+
+    console.log(id);
     
     allTabButton.classList.add("btn-soft", "text-gray-600");
     openTabButton.classList.add("btn-soft", "text-gray-600");
@@ -33,6 +45,7 @@ function toggleStyle(id){
     const allIssuesSection = document.getElementById("all-issue-container");
     const openIssuesSection = document.getElementById("open-issue-container");
     const closedIssuesSection = document.getElementById("closed-issue-container");
+    const searchButton = document.getElementById("search-btn");
 
     const selected = document.getElementById(id);
     toggleButtonStatus = id;
@@ -44,16 +57,25 @@ function toggleStyle(id){
         allIssuesSection.classList.add("hidden");
         openIssuesSection.classList.remove("hidden");
         closedIssuesSection.classList.add("hidden");
+        searchButton.classList.add("open-btn");
+        searchButton.classList.remove("all-btn");
+        searchButton.classList.remove("closed-btn");
         loadOpenIssues();
     }else if(id == "all-tab-btn"){
         allIssuesSection.classList.remove("hidden");
         openIssuesSection.classList.add("hidden");
         closedIssuesSection.classList.add("hidden");
+        searchButton.classList.add("all-btn");
+        searchButton.classList.remove("open-btn");
+        searchButton.classList.remove("closed-btn");
         loadIssues();
     }else if(id == "closed-tab-btn"){
         allIssuesSection.classList.add("hidden");
         openIssuesSection.classList.add("hidden");
         closedIssuesSection.classList.remove("hidden");
+        searchButton.classList.add("closed-btn");
+        searchButton.classList.remove("open-btn");
+        searchButton.classList.remove("all-btn");
         loadClosedIssues();
     }
 }
@@ -117,6 +139,10 @@ async function loadIssues() {
     // console.log(allIssues.length)
     const totalIssues = document.getElementById("total-count");
     totalIssues.innerText = allIssues.length;
+
+    const issueText = document.getElementById("issue-text");
+    issueText.innerText = "";
+    issueText.innerText = "All Issues"
 
     const container = document.getElementById("all-issue-container");
     container.innerHTML = "";
@@ -203,6 +229,17 @@ async function loadOpenIssues() {
     // filter only open issues
     const openIssues = issues.filter(issue => issue.status === "open");
 
+    // counting all open issues and updating numbers in Open tab
+    const allOpenIssues = openIssues;
+    // console.log(allOpenIssues.length)
+    const totalOpenIssues = document.getElementById("total-count");
+    totalOpenIssues.innerText = 0;
+    totalOpenIssues.innerText = allOpenIssues.length;
+
+    const issueText = document.getElementById("issue-text");
+    issueText.innerText = "";
+    issueText.innerText = "Open Issues"
+
     const container = document.getElementById("open-issue-container");
     container.innerHTML = "";
     manageSpinner(true);
@@ -279,6 +316,17 @@ async function loadClosedIssues() {
 
     // filter only closed issues
     const closedIssues = issues.filter(issue => issue.status === "closed");
+
+    // counting all open issues and updating numbers in Open tab
+    const allClosedIssues = closedIssues;
+    // console.log(allOpenIssues.length)
+    const totalClosedIssues = document.getElementById("total-count");
+    totalClosedIssues.innerText = 0;
+    totalClosedIssues.innerText = allClosedIssues.length;
+
+    const issueText = document.getElementById("issue-text");
+    issueText.innerText = "";
+    issueText.innerText = "Closed Issues"
 
     const container = document.getElementById("closed-issue-container");
     container.innerHTML = "";
@@ -374,6 +422,7 @@ document.getElementById("search-btn").addEventListener("click", async () => {
             issue.title.toLowerCase().includes(searchValue) ||
             issue.description.toLowerCase().includes(searchValue) ||
             issue.priority.toLowerCase().includes(searchValue) ||
+            issue.status.toLowerCase().includes(searchValue) ||
             issue.labels.some(label => label.toLowerCase().includes(searchValue))
         );
 
@@ -387,74 +436,314 @@ document.getElementById("search-btn").addEventListener("click", async () => {
 
 function displaySearchResults(issues){
 
-    const container = document.getElementById("all-issue-container");
-    container.innerHTML = "";
+    // counting all searched issues and updating numbers
+    const searchedIssues = issues.length;
+    
+    // console.log(allOpenIssues.length)
+    const totalfoundedSearchedIssues = document.getElementById("total-count");
+    totalfoundedSearchedIssues.innerText = 0;
+    totalfoundedSearchedIssues.innerText = searchedIssues;
 
-    if(issues.length === 0){
-        container.innerHTML = "<p class='text-center text-gray-500'>No issues found</p>";
-        return;
+    const issueText = document.getElementById("issue-text");
+    issueText.innerText = "";
+    issueText.innerText = "Issues Found"
+
+
+    const searchButton = document.getElementById("search-btn");
+    const classLists = searchButton.classList;
+    const classArray = Array.from(classLists);
+  
+    const allBtnStatus = classArray.filter(cls => cls === "all-btn");
+    allBtn = allBtnStatus[0];
+
+    const openBtnStatus = classArray.filter(cls => cls === "open-btn");
+    openBtn = openBtnStatus[0];
+
+    const closedBtnStatus = classArray.filter(cls => cls === "closed-btn");
+    closedBtn = closedBtnStatus[0];
+
+    
+
+    if(openBtn === "open-btn"){
+            const container = document.getElementById("open-issue-container");
+            container.innerHTML = "";
+
+            if(issues.length === 0){
+                container.innerHTML = "<p class='text-center text-gray-500'>No issues found</p>";
+                return;
+            }
+
+            issues.forEach(issue => {
+
+            let borderColor = "";
+            let image = "";
+            if (issue.status === "open") {
+                borderColor = "border-green-600";
+                image = '<img src="./assets/Open-Status.png" alt=""/>';
+            } 
+            else if (issue.status === "closed") {
+                borderColor = "border-red-600";
+                image = '<i class="fa-regular fa-circle-check"></i>';
+            } 
+            else {
+                borderColor = "border-yellow-500";
+            }
+
+            let priorityColor = "";
+            let badgeColor = "";
+
+            if (issue.priority === "high") {
+                priorityColor = "border-red-200";
+                badgeColor = "badge-secondary"
+            } 
+            else if (issue.priority === "medium") {
+                priorityColor = "border-yellow-200";
+                badgeColor = "badge-warning"
+            } 
+            else {
+                priorityColor = "border-blue-200";
+                badgeColor = "badge-error"
+            }
+
+
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+            <div onclick="loadIssueDetails(${issue.id})" class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
+                        <div class="flex justify-between">
+                            <figure>${image}</figure>
+                            <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">${issue.title}</h2>
+                            <p>${issue.description}</p>
+                            <div class="card-actions justify-start">
+                            <div class="badge badge-outline badge-error bg-red-200 rounded-full">${issue.labels[0]} </div>
+                            <div class="badge badge-outline badge-error bg-yellow-200 rounded-full">${issue.labels[1]}</div>
+                            </div>
+                            <br>
+                            <hr class ="bg-slate-500">
+                            <p>${issue.assignee}</p>
+                            <p>created ${issue.createdAt}</p>
+                        </div>
+                    </div>
+
+            `;
+
+            container.appendChild(div);
+
+        });
+    }else if(closedBtn === "closed-btn"){
+            const container = document.getElementById("closed-issue-container");
+            container.innerHTML = "";
+
+            if(issues.length === 0){
+                container.innerHTML = "<p class='text-center text-gray-500'>No issues found</p>";
+                return;
+            }
+
+            issues.forEach(issue => {
+
+            let borderColor = "";
+            let image = "";
+            if (issue.status === "open") {
+                borderColor = "border-green-600";
+                image = '<img src="./assets/Open-Status.png" alt=""/>';
+            } 
+            else if (issue.status === "closed") {
+                borderColor = "border-red-600";
+                image = '<i class="fa-regular fa-circle-check"></i>';
+            } 
+            else {
+                borderColor = "border-yellow-500";
+            }
+
+            let priorityColor = "";
+            let badgeColor = "";
+
+            if (issue.priority === "high") {
+                priorityColor = "border-red-200";
+                badgeColor = "badge-secondary"
+            } 
+            else if (issue.priority === "medium") {
+                priorityColor = "border-yellow-200";
+                badgeColor = "badge-warning"
+            } 
+            else {
+                priorityColor = "border-blue-200";
+                badgeColor = "badge-error"
+            }
+
+
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+            <div onclick="loadIssueDetails(${issue.id})" class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
+                        <div class="flex justify-between">
+                            <figure>${image}</figure>
+                            <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">${issue.title}</h2>
+                            <p>${issue.description}</p>
+                            <div class="card-actions justify-start">
+                            <div class="badge badge-outline badge-error bg-red-200 rounded-full">${issue.labels[0]} </div>
+                            <div class="badge badge-outline badge-error bg-yellow-200 rounded-full">${issue.labels[1]}</div>
+                            </div>
+                            <br>
+                            <hr class ="bg-slate-500">
+                            <p>${issue.assignee}</p>
+                            <p>created ${issue.createdAt}</p>
+                        </div>
+                    </div>
+
+            `;
+
+            container.appendChild(div);
+
+        });
+    }else{
+            const container = document.getElementById("all-issue-container");
+            container.innerHTML = "";
+
+            if(issues.length === 0){
+                container.innerHTML = "<p class='text-center text-gray-500'>No issues found</p>";
+                return;
+            }
+
+            issues.forEach(issue => {
+
+            let borderColor = "";
+            let image = "";
+            if (issue.status === "open") {
+                borderColor = "border-green-600";
+                image = '<img src="./assets/Open-Status.png" alt=""/>';
+            } 
+            else if (issue.status === "closed") {
+                borderColor = "border-red-600";
+                image = '<i class="fa-regular fa-circle-check"></i>';
+            } 
+            else {
+                borderColor = "border-yellow-500";
+            }
+
+            let priorityColor = "";
+            let badgeColor = "";
+
+            if (issue.priority === "high") {
+                priorityColor = "border-red-200";
+                badgeColor = "badge-secondary"
+            } 
+            else if (issue.priority === "medium") {
+                priorityColor = "border-yellow-200";
+                badgeColor = "badge-warning"
+            } 
+            else {
+                priorityColor = "border-blue-200";
+                badgeColor = "badge-error"
+            }
+
+
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+            <div onclick="loadIssueDetails(${issue.id})" class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
+                        <div class="flex justify-between">
+                            <figure>${image}</figure>
+                            <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">${issue.title}</h2>
+                            <p>${issue.description}</p>
+                            <div class="card-actions justify-start">
+                            <div class="badge badge-outline badge-error bg-red-200 rounded-full">${issue.labels[0]} </div>
+                            <div class="badge badge-outline badge-error bg-yellow-200 rounded-full">${issue.labels[1]}</div>
+                            </div>
+                            <br>
+                            <hr class ="bg-slate-500">
+                            <p>${issue.assignee}</p>
+                            <p>created ${issue.createdAt}</p>
+                        </div>
+                    </div>
+
+            `;
+
+            container.appendChild(div);
+
+        });
     }
 
-    issues.forEach(issue => {
+    // const container = document.getElementById("all-issue-container");
+    // container.innerHTML = "";
 
-        let borderColor = "";
-        let image = "";
-        if (issue.status === "open") {
-            borderColor = "border-green-600";
-            image = '<img src="./assets/Open-Status.png" alt=""/>';
-        } 
-        else if (issue.status === "closed") {
-            borderColor = "border-red-600";
-            image = '<i class="fa-regular fa-circle-check"></i>';
-        } 
-        else {
-            borderColor = "border-yellow-500";
-        }
+    // if(issues.length === 0){
+    //     container.innerHTML = "<p class='text-center text-gray-500'>No issues found</p>";
+    //     return;
+    // }
 
-        let priorityColor = "";
-        let badgeColor = "";
+    // issues.forEach(issue => {
 
-        if (issue.priority === "high") {
-            priorityColor = "border-red-200";
-            badgeColor = "badge-secondary"
-        } 
-        else if (issue.priority === "medium") {
-            priorityColor = "border-yellow-200";
-            badgeColor = "badge-warning"
-        } 
-        else {
-            priorityColor = "border-blue-200";
-            badgeColor = "badge-error"
-        }
+    //     let borderColor = "";
+    //     let image = "";
+    //     if (issue.status === "open") {
+    //         borderColor = "border-green-600";
+    //         image = '<img src="./assets/Open-Status.png" alt=""/>';
+    //     } 
+    //     else if (issue.status === "closed") {
+    //         borderColor = "border-red-600";
+    //         image = '<i class="fa-regular fa-circle-check"></i>';
+    //     } 
+    //     else {
+    //         borderColor = "border-yellow-500";
+    //     }
+
+    //     let priorityColor = "";
+    //     let badgeColor = "";
+
+    //     if (issue.priority === "high") {
+    //         priorityColor = "border-red-200";
+    //         badgeColor = "badge-secondary"
+    //     } 
+    //     else if (issue.priority === "medium") {
+    //         priorityColor = "border-yellow-200";
+    //         badgeColor = "badge-warning"
+    //     } 
+    //     else {
+    //         priorityColor = "border-blue-200";
+    //         badgeColor = "badge-error"
+    //     }
 
 
-      const div = document.createElement("div");
+    //   const div = document.createElement("div");
 
-      div.innerHTML = `
-        <div onclick="loadIssueDetails(${issue.id})" class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
-                    <div class="flex justify-between">
-                        <figure>${image}</figure>
-                        <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
-                    </div>
+    //   div.innerHTML = `
+    //     <div onclick="loadIssueDetails(${issue.id})" class="card h-[100%] bg-base-100 border-t-4 ${borderColor} shadow-xl p-5 gap-2">
+    //                 <div class="flex justify-between">
+    //                     <figure>${image}</figure>
+    //                     <div class="badge ${badgeColor} ${priorityColor} rounded-full">${issue.priority}</div>
+    //                 </div>
                     
-                    <div class="card-body">
-                        <h2 class="card-title">${issue.title}</h2>
-                        <p>${issue.description}</p>
-                        <div class="card-actions justify-start">
-                        <div class="badge badge-outline badge-error bg-red-200 rounded-full">${issue.labels[0]} </div>
-                        <div class="badge badge-outline badge-error bg-yellow-200 rounded-full">${issue.labels[1]}</div>
-                        </div>
-                        <br>
-                        <hr class ="bg-slate-500">
-                        <p>${issue.assignee}</p>
-                        <p>created ${issue.createdAt}</p>
-                    </div>
-                </div>
+    //                 <div class="card-body">
+    //                     <h2 class="card-title">${issue.title}</h2>
+    //                     <p>${issue.description}</p>
+    //                     <div class="card-actions justify-start">
+    //                     <div class="badge badge-outline badge-error bg-red-200 rounded-full">${issue.labels[0]} </div>
+    //                     <div class="badge badge-outline badge-error bg-yellow-200 rounded-full">${issue.labels[1]}</div>
+    //                     </div>
+    //                     <br>
+    //                     <hr class ="bg-slate-500">
+    //                     <p>${issue.assignee}</p>
+    //                     <p>created ${issue.createdAt}</p>
+    //                 </div>
+    //             </div>
 
-        `;
+    //     `;
 
-        container.appendChild(div);
+    //     container.appendChild(div);
 
-    });
+    // });
 
 }
